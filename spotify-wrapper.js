@@ -1,35 +1,19 @@
-const { Buffer } = require('buffer');
-
-const axios = require('axios').default;
+const authBuilder = require('./auth-builder')
+const httpService = require('./config')
+const MAX_ERROR = 3;
 
 const spotifyApi = (client, secret) => {
     const clientID = client;
     const secretKey = secret;
-    const authURI = 'https://accounts.spotify.com/api/token';
     const searchURI = 'https://api.spotify.com/v1/search?q=';
-    let err_cnt = 0;
-    const MAX_ERROR = 3;
 
-    const authConfig = {
-        url: authURI,
-        method: "post",
-        params: {
-            grant_type: "client_credentials"
-        },
-        headers: {
-            'Authorization': 'Basic ' + (new Buffer.from(clientID + ':' + secretKey).toString('base64')),
-            "Accept": "application/json",
-            "Content-Type": "application/x-www-form-urlencoded"
-        }
-    };
     let token = '';
+    let err_cnt = 0;
 
     async function authenticate() {
         try {
-            const response = await axios(authConfig);
+            const response = await httpService(authBuilder(clientID, secretKey));
             token = response.data.access_token;
-            const timeout = response.data.expires_in;
-            //setTimeout(authenticate, timeout);
         } catch (e) {
             console.log('auth failed: ' + e);
         }
@@ -38,7 +22,7 @@ const spotifyApi = (client, secret) => {
     async function searchTrack(query) {
         try {
             const searchURL = searchURI + encodeURIComponent(query) + '&type=artist'
-            const search = await axios({
+            const search = await httpService({
                 url: searchURL,
                 method: "get",
                 headers: {
@@ -47,6 +31,7 @@ const spotifyApi = (client, secret) => {
             });
             err_cnt = 0;
             console.log(search.data);
+            return search.data;
 
         } catch (e) {
             if(err_cnt < MAX_ERROR) {
