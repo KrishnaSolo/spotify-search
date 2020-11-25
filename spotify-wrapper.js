@@ -2,21 +2,28 @@ const authBuilder = require('./auth-builder')
 const httpService = require('./config')
 const MAX_ERROR = 3;
 
-const spotifyApi = (client, secret) => {
-    const clientID = client;
-    const secretKey = secret;
+// using an IIFE as you only need one instance of spotify api
+const spotifyApi = (() => {
+    let clientID = '';
+    let secretKey = '';
     const searchURI = 'https://api.spotify.com/v1/search?q=';
 
     let token = '';
     let err_cnt = 0;
 
     async function authenticate() {
+        if(!clientID || !secretKey) return console.log('Please set credentials first');
         try {
             const response = await httpService(authBuilder(clientID, secretKey));
             token = response.data.access_token;
         } catch (e) {
             console.log('auth failed: ' + e);
         }
+    };
+
+    function setCredentials(id, key) {
+        clientID = id;
+        secretKey = key;
     };
 
     async function searchTrack(query) {
@@ -48,7 +55,8 @@ const spotifyApi = (client, secret) => {
     return {
         auth: authenticate,
         search: searchTrack,
+        setCredentials: setCredentials,
     };
-};
+})();
 
 module.exports = spotifyApi;
