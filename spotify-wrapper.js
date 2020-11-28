@@ -11,7 +11,7 @@ const spotifyApi = (() => {
     let token = '';
     let err_cnt = 0;
 
-    async function authenticate() {
+    async function authenticate(token) {
         if(!clientID || !secretKey) return console.log('Please set credentials first');
         try {
             const response = await httpService(authBuilder(clientID, secretKey));
@@ -53,9 +53,8 @@ const spotifyApi = (() => {
     };
 
     return {
-        auth: authenticate,
-        search: searchTrack,
         setCredentials: setCredentials,
+        search: searchTrack,
     };
 })();
 
