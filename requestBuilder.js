@@ -1,35 +1,47 @@
+'use strict';
+
 const httpService = require('./config')
 
-const requestBuilder = () => {
+function RequestBuilder() {
     this._request = {
         url: '',
         method: '',
         params: {},
         headers: {},
     };
+};
 
-    this._setter = (key) => {
-        this._request[key] = key;
+RequestBuilder.prototype = function () {
+    function _setter(key, value) {
+        this._request[key] = value;
         return this;
     };
 
-    this.setUrl = url => this._setter(url);
-    this.setMethod = method => this._setter(method);
-    this.setParams = params => this._setter(params);
-    this.setHeaders = headers => this._setter(headers);
+    function setUrl(url) { 
+        return _setter.call(this, 'url', url);
+    };
+    function setMethod(method) { 
+        return _setter.call(this, 'method', method);
+    };
+    function setParams(params) { 
+        return _setter.call(this, 'params', params);
+    };
+    function setHeaders(headers) { 
+        return _setter.call(this, 'headers', headers);
+    };
 
-    this.execute = async () => {
+    async function execute() {
         res = await httpService(this._request);
         return res;
     };
 
     return {
-        setUrl: this.setUrl,
-        setMethod: this.setMethod,
-        setParams: this.setParams,
-        setHeaders: this.setHeaders,
-        execute: this.execute,
+        setUrl: setUrl,
+        setMethod: setMethod,
+        setParams: setParams,
+        setHeaders: setHeaders,
+        execute: execute,
     };
-};
+}();
 
-module.exports = requestBuilder;
+module.exports = RequestBuilder;
