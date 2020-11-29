@@ -28,6 +28,7 @@ const SpotifyApi = (() => {
 
     async function searchTrack(query) {
         try {
+            await authenticate();
             const searchURL = searchURI + encodeURIComponent(query) + '&type=artist'
             const header = {
                 'Authorization': 'Bearer ' + token,
@@ -37,7 +38,6 @@ const SpotifyApi = (() => {
             const search = await request.setUrl(searchURL).setMethod("get").setHeaders(header).execute();
 
             err_cnt = 0;
-            console.log(search.data);
             return search.data;
 
         } catch (e) {

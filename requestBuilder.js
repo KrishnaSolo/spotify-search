@@ -3,12 +3,7 @@
 const httpService = require('./config')
 
 function RequestBuilder() {
-    this._request = {
-        url: '',
-        method: '',
-        params: {},
-        headers: {},
-    };
+    this._request = {};
 };
 
 RequestBuilder.prototype = function () {
@@ -31,7 +26,7 @@ RequestBuilder.prototype = function () {
     };
 
     async function execute() {
-        res = await httpService(this._request);
+        const res = await httpService(this._request);
         return res;
     };
 
