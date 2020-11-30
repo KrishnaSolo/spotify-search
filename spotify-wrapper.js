@@ -6,34 +6,45 @@ const MAX_ERROR = 3;
 const SpotifyApi = (() => {
     let clientID = '';
     let secretKey = '';
-    const searchURI = 'https://api.spotify.com/v1/search?q=';
 
     let token = '';
+    let timeout_timestamp = '';
     let err_cnt = 0;
 
+    //takes in id and keys and call auth service to get token and timeout based on current time
     async function authenticate() {
         if(!clientID || !secretKey) return console.log('Please set credentials first');
         try {
             const response = await authService(clientID, secretKey);
+            const curr_time = new Date(Date.now());
+
+            //set token and timeout for services
             token = response.data.access_token;
+            timeout_timestamp = curr_time.setSeconds(curr_time.getSeconds() + 3600) 
         } catch (e) {
             console.log('auth failed: ' + e);
         }
     };
 
+    //option to update auth creds 
     function setCredentials(id, key) {
         clientID = id;
         secretKey = key;
     };
 
+
+    //take query and searches against tracks
     async function searchTrack(query) {
         try {
-            await authenticate();
-            const searchURL = searchURI + encodeURIComponent(query) + '&type=artist'
+            //only auth if token has expired
+            if(Date.now() > timeout_timestamp ) await authenticate();
+
+            const searchURL = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track`;
             const header = {
                 'Authorization': 'Bearer ' + token,
             };
 
+            //Build a request using builder and execute to send request
             const request = new RequestBuilder();
             const search = await request.setUrl(searchURL).setMethod("get").setHeaders(header).execute();
 
@@ -42,7 +53,7 @@ const SpotifyApi = (() => {
 
         } catch (e) {
             if(err_cnt < MAX_ERROR) {
-                authenticate();
+                await authenticate();
                 searchTrack(query);
                 err_cnt++;
             } else {
