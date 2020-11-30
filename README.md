@@ -2,7 +2,7 @@
 Node wrapper for spotify for searching artists and tracks
 
 # How to get started #
-```
+```javascript
 //import in api
 const spotify = require('./spotify-wrapper');
 
