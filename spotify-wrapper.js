@@ -39,6 +39,7 @@ const SpotifyApi = (() => {
             //only auth if token has expired
             if(Date.now() > timeout_timestamp ) await authenticate();
 
+            //encode the url for query
             const searchURL = `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track`;
             const header = {
                 'Authorization': 'Bearer ' + token,
@@ -49,6 +50,7 @@ const SpotifyApi = (() => {
             const search = await request.setUrl(searchURL).setMethod("get").setHeaders(header).execute();
 
             err_cnt = 0;
+            //return data which contains actual response of tracks
             return search.data;
 
         } catch (e) {

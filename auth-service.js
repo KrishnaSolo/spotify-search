@@ -1,5 +1,6 @@
 'use strict';
 
+//inorder to encode the string, use buffer to hold data
 const { Buffer } = require('buffer');
 const RequestBuilder = require('./requestBuilder')
 
