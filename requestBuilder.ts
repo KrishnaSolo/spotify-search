@@ -1,6 +1,4 @@
-'use strict';
-
-const httpService = require('./config')
+import { httpService } from './config';
 
 function RequestBuilder() {
     this._request = {};
@@ -37,6 +35,6 @@ RequestBuilder.prototype = function () {
         setHeaders: setHeaders,
         execute: execute,
     };
-}();
+};
 
 module.exports = RequestBuilder;
