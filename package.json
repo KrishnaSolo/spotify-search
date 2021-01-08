@@ -1,0 +1,15 @@
+{
+    "name": "@ksolo/spotify-wrapper",
+    "version": "1.0.0",
+    "description": "Removes all spaces from a string",
+    "license": "MIT",
+    "repository": "ksolo/spotify-wrapper",
+    "main": "spotify-wrapper.js",
+    "keywords": [
+      "spotify-wrapper",
+      "npm",
+      "package",
+      "ksolo",
+      "spotify"
+    ]
+  }

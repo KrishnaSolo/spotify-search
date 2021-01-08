@@ -13,6 +13,7 @@ const authService = (client, secret) => {
     };
 
     const authRequest = new RequestBuilder();
+    console.log(authRequest);
     return authRequest.setUrl(authURI).setMethod("post").setParams(params).setHeaders(header).execute();
 };
 
