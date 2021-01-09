@@ -1,0 +1,34 @@
+{
+  "name": "spotify-wrapper",
+  "version": "1.0.0",
+  "description": "Spotify module to search and add songs to playlist",
+  "main": "./index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "buffer": "^6.0.3"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0",
+    "eslint-config-prettier": "^7.1.0",
+    "prettier": "2.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ./lib/",
+    "style": "prettier --write ./lib/",
+    "prettier-watch": "onchange \"**/*\" -- prettier --write --ignore-unknown {{changed}}"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrishnaSolo/spotfiy-wrapper.js.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KrishnaSolo/spotfiy-wrapper.js/issues"
+  },
+  "homepage": "https://github.com/KrishnaSolo/spotfiy-wrapper.js#readme"
+}
