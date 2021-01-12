@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Spotify module to search and add songs to playlist",
   "main": "./index.js",
+  "types": "types/index.d.ts",
   "directories": {
     "lib": "lib"
   },
