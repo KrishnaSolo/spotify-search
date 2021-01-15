@@ -1,6 +1,6 @@
 {
-  "name": "spotify-wrapper",
-  "version": "1.0.0",
+  "name": "@ksolo/spotify-wrapper",
+  "version": "1.1.0",
   "description": "Spotify module to search and add songs to playlist",
   "main": "./index.js",
   "directories": {
