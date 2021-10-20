@@ -1,4 +1,4 @@
-# spotfiy-wrapper.js
+# spotfiy-search.js
 
 Node wrapper for spotify for searching artists and tracks
 
